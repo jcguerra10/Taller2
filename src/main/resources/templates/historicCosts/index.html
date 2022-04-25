@@ -16,30 +16,15 @@
 <link rel="stylesheet" href="../css/shards.min.css">
 </head>
 <body>
-	<div th:switch="${apps}" class="container my-5">
+	<div class="container my-5">
 		<div class="row">
-			<div class="col-md-6">
-				<h2 th:case="null">Index!!!</h2>
-
-				<p>
-					<a href="/products/"><i class="fas fa-product-hunt ml-2"></i> Products</a>
-				</p>
-				
-				<p>
-					<a href="/locations/"><i class="fas fa-location-crosshairs ml-2"></i> Locations</a>
-				</p>
-				
-				<p>
-					<a href="/historicCosts/"><i class="fas fa-rectangle-history ml-2"></i> Historic Costs</a>
-				</p>
-				
-				<p>
-					<a href="/inventoryProduct/"><i class="fas fa-box ml-2"></i> Inventory</a>
-				</p>
-
-				<p>
-					<a href="/logout"><i class="fas fa-power-off ml-2"></i> Log Out</a>
-				</p>
+			<div class="col-md-10">
+				<div>
+					<h2 class="my-5">Add HistoricCosts</h2>
+					<form action="#" th:action="@{/product-cost-history/add/}" th:object="${productcosthistory}" method="post">
+						
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
