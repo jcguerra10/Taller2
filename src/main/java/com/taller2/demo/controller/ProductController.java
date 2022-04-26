@@ -1,5 +1,7 @@
 package com.taller2.demo.controller;
 
+import java.sql.Timestamp;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,19 +57,45 @@ public class ProductController {
 
 	@PostMapping("/products/add/")
 	public String productAdd(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model,
-			@RequestParam(value = "action", required = true) String action) {
+			@RequestParam(value = "action", required = true) String action, String startdate, String enddate) {
 
+		
+		
 		String ret = "redirect:/products/";
 
 		if (!action.equals("Cancel")) {
 			if (!bindingResult.hasErrors()) {
-				ret = "/products/createcategories";
+				Timestamp startDate = Convert(startdate);
+				Timestamp endDate = Convert(startdate);
+				
+				product.setSellstartdate(startDate);
+				product.setSellenddate(endDate);
+				
+				
+				productServiceImp.saveProduct(product);
+				
 			} else {
 				ret = "/products/add";
 			}
 		}
 		return ret;
 	}
+	
+	private Timestamp Convert(String date) {
+		String res = "";
+		String[] splt = null;
+		
+		if(!date.isEmpty() || !date.isBlank()) {
+			splt = date.split("T");
+			
+			res += splt[0];
+			
+			res += " " + splt[1] + ":00";
+		}
+		return Timestamp.valueOf(res);
+	}
+
+	//----------------- CATEGORIES -----------------
 	
 	@GetMapping("/products/createcategories/")
 	public String createCategoriesScreen(Model model) {

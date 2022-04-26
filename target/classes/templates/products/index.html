@@ -23,15 +23,13 @@
 					<h2 class="my-5">Products</h2>
 					<table class="table table-striped table-responsive-md">
 						<thead>
-							<tr>
-								<th>ID</th>
+							<tr>								
 								<th>Product Number</th>
-								<th>Name</th>
+								<th>Name</th>			
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="Product : ${product}">
-								<td th:text="${product.id}"/>
+							<tr th:each="product : ${products}">								
 								<td th:text="${product.productnumber}"/>
 								<td th:text="${product.name}"/>
 								<!--Buttons-->

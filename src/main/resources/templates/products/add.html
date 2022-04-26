@@ -25,7 +25,7 @@
 						th:object="${product}" method="post">
 						<div>
 							<div class="form-group">
-								<label>ID</label> <input class="form-control" type="text"
+								<label>Product Number</label> <input class="form-control" type="text"
 									placeholder="productnumber" th:field="*{productnumber}" /> <span
 									th:if="${#fields.hasErrors('productnumber')}"
 									th:errors="*{productnumber}" class="text-danger"></span>
@@ -40,10 +40,38 @@
 							<div class="form-group">
 								<label>Sub Category</label> <select class="form-control"
 									th:field="*{productsubcategory}">
-									<option th:each="g : ${subcategories}" th:value="${g.name}"
+									<option th:each="g : ${subcategories}" th:value="${g.productsubcategoryid}"
 										th:text="${#strings.capitalize(g.name)}"></option>
 								</select> <span th:if="${#fields.hasErrors('productsubcategory')}"
 									th:errors="*{productsubcategory}" class="text-danger"></span>
+							</div>
+							
+							<div class="form-group">
+								<label>Start Date</label> <input class="form-control" type="datetime-local"
+									placeholder="sellstartdate" id="startdate" name="startdate"/> <span
+									th:if="${#fields.hasErrors('sellstartdate')}" th:errors="*{sellstartdate}"
+									class="text-danger"></span>
+							</div>
+							
+							<div class="form-group">
+								<label>End Date</label> <input class="form-control" type="datetime-local"
+									placeholder="sellenddate" id="enddate" name="enddate"/> <span
+									th:if="${#fields.hasErrors('sellenddate')}" th:errors="*{sellenddate}"
+									class="text-danger"></span>
+							</div>
+							
+							<div class="form-group">
+								<label>Size</label> <input class="form-control" type="number"
+									placeholder="0,0" th:field="*{size}" min="0" /> <span
+									th:if="${#fields.hasErrors('size')}" th:errors="*{size}"
+									class="text-danger"></span>
+							</div>
+							
+							<div class="form-group">
+								<label>Weight</label> <input class="form-control" type="number"
+									placeholder="0,0" th:field="*{weight}" min="0" /> <span
+									th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"
+									class="text-danger"></span>
 							</div>
 
 						</div>
