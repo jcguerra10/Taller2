@@ -18,15 +18,38 @@
 <body>
 	<div class="container my-5">
 		<div class="row">
-			<div class="col-md-10">
+			<div class="col-md-12">
 				<div>
-					<h2 class="my-5">Add HistoricCosts</h2>
-					<form action="#" th:action="@{/product-cost-history/add/}" th:object="${productcosthistory}" method="post">
-						
-					</form>
+					<h2 class="my-5">Add Historic Costs</h2>
+					<table class="table table-striped table-responsive-md">
+						<thead>
+							<tr>
+								<th>PK</th>
+								<th>End Date</th>
+								<th>Standard Cost</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="hc : ${historiccosts}">
+								<td th:text="${hc.id.productid}">
+								<td th:text="${hc.enddate}" />
+								<td th:text="${hc.standardcost}" />
+								<!--Buttons-->
+								<td><a
+									th:href="@{/historiccosts/edit/{id}(id=${hc.id})}"
+									class="btn btn-primary"> <i class="fas fa-edit"></i>
+								</a></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
+				<p class="my-5">
+					<a href="/historiccosts/add/" class="btn btn-primary"><i
+						class="fas fa-user-plus ml-2"></i></a>
+				</p>
 			</div>
 		</div>
+		<a href="/"><i class="fas fa-home ml-2"></i> Go back to main</a>
 	</div>
 </body>
 </html>

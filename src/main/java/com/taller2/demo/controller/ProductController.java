@@ -66,7 +66,7 @@ public class ProductController {
 		if (!action.equals("Cancel")) {
 			if (!bindingResult.hasErrors()) {
 				Timestamp startDate = Convert(startdate);
-				Timestamp endDate = Convert(startdate);
+				Timestamp endDate = Convert(enddate);
 				
 				product.setSellstartdate(startDate);
 				product.setSellenddate(endDate);
@@ -119,9 +119,6 @@ public class ProductController {
 		
 		return "redirect:/products/add/";
 	}
-	
-	
-	
 	
 	
 	
