@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -74,6 +75,12 @@ public class InventoryController {
 		}
 		return ret;
 	}
+	
+	@GetMapping("/inventoryproduct/edit/{idp}{idl}")
+	public String editInventory(@Valid @ModelAttribute Productinventory productInventory, BindingResult bindingresult, @PathVariable("idp") Integer idp , @PathVariable("idl") Integer idl, Model model, @RequestParam(value = "action", required = true) String action) {
+		return "";
+	}
+	
 	
 	
 }
