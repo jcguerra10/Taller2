@@ -54,4 +54,12 @@ public class ProductcosthistoryPK implements Serializable {
 		
 		return hash;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return productid + "_" + startdate;
+	}
+	
+	
 }

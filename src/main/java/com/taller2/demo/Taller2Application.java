@@ -1,6 +1,7 @@
 package com.taller2.demo;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.springframework.boot.SpringApplication;
@@ -11,12 +12,15 @@ import org.springframework.context.annotation.ComponentScan;
 import com.taller2.demo.model.prod.Location;
 import com.taller2.demo.model.prod.Product;
 import com.taller2.demo.model.prod.Productcategory;
+import com.taller2.demo.model.prod.Productcosthistory;
+import com.taller2.demo.model.prod.ProductcosthistoryPK;
 import com.taller2.demo.model.prod.Productsubcategory;
 import com.taller2.demo.model.prod.UserApp;
 import com.taller2.demo.model.prod.UserType;
 import com.taller2.demo.repositories.LocationRepository;
 import com.taller2.demo.repositories.ProductRepository;
 import com.taller2.demo.repositories.ProductcategoryRepository;
+import com.taller2.demo.repositories.ProductcosthistoryRepository;
 import com.taller2.demo.repositories.ProductsubcategoryRepository;
 import com.taller2.demo.services.UserServiceImp;
 
@@ -80,6 +84,20 @@ public class Taller2Application {
 		l.setCostrate(BigDecimal.valueOf(1));
 		
 		lr.save(l);
+		
+		ProductcosthistoryRepository pchr = s.getBean(ProductcosthistoryRepository.class);
+		
+		Productcosthistory pch = new Productcosthistory();
+		ProductcosthistoryPK pchPK = new ProductcosthistoryPK();
+		
+		pchPK.setProductid(p.getProductid());
+		pchPK.setStartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
+		pch.setId(pchPK);
+		pch.setProduct(p);
+		pch.setEnddate(Timestamp.valueOf("2022-03-12 10:31:04"));
+		pch.setStandardcost(BigDecimal.valueOf(12));
+		
+		pchr.save(pch);
 	}
 
 }
