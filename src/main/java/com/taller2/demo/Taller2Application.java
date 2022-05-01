@@ -1,12 +1,23 @@
 package com.taller2.demo;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
+import com.taller2.demo.model.prod.Location;
+import com.taller2.demo.model.prod.Product;
+import com.taller2.demo.model.prod.Productcategory;
+import com.taller2.demo.model.prod.Productsubcategory;
 import com.taller2.demo.model.prod.UserApp;
 import com.taller2.demo.model.prod.UserType;
+import com.taller2.demo.repositories.LocationRepository;
+import com.taller2.demo.repositories.ProductRepository;
+import com.taller2.demo.repositories.ProductcategoryRepository;
+import com.taller2.demo.repositories.ProductsubcategoryRepository;
 import com.taller2.demo.services.UserServiceImp;
 
 @SpringBootApplication
@@ -34,6 +45,41 @@ public class Taller2Application {
 		
 		usi.save(uaAdmin);
 		usi.save(uaOper);
+		
+		ProductRepository pr = s.getBean(ProductRepository.class);
+		ProductcategoryRepository pcr = s.getBean(ProductcategoryRepository.class);
+		ProductsubcategoryRepository pscr = s.getBean(ProductsubcategoryRepository.class);
+		LocationRepository lr = s.getBean(LocationRepository.class);
+		
+		Productcategory pCategory = new Productcategory();
+		pCategory.setName("Tech");
+		
+		Productsubcategory pSubCategory = new Productsubcategory();
+		pSubCategory.setName("Iphone");
+		pSubCategory.setProductcategory(pCategory);
+		
+		Product p = new Product();
+		p.setName("iphone");
+		p.setProductnumber("21");
+		p.setSellstartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
+		p.setSellenddate(Timestamp.valueOf("2022-03-12 10:31:04"));
+		p.setProductsubcategory(pSubCategory);
+		p.setSize(BigDecimal.valueOf(12));
+		p.setWeight(BigDecimal.valueOf(12));
+		
+		pcr.save(pCategory);
+		pscr.save(pSubCategory);
+		
+		pr.save(p);
+		
+		Location l = new Location();
+		
+		l.setLocationid(1);
+		l.setName("stan1");
+		l.setAvailability(BigDecimal.valueOf(2));
+		l.setCostrate(BigDecimal.valueOf(1));
+		
+		lr.save(l);
 	}
 
 }

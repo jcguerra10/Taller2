@@ -25,11 +25,9 @@ public class ProductInventoryServiceImp implements ProductInventoryService {
 	@Override
 	public Productinventory saveProductInventory(Productinventory proInventory) {
 		if (proInventory == null)
-			throw new NullPointerException();
+			throw new NullPointerException("ObjectNull");
 		if (proInventory.getLocation() == null) 
-			throw new NullPointerException();
-		if (lr.existsById(proInventory.getLocation().getLocationid()))
-			throw new NullPointerException();
+			throw new NullPointerException("location");
 		if (proInventory.getQuantity() == null)
 			throw new IllegalArgumentException("Quantity Null");
 		if (proInventory.getQuantity() < 0)
