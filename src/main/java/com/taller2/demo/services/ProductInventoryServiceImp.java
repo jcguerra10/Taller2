@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.taller2.demo.model.prod.Productinventory;
+import com.taller2.demo.model.prod.ProductinventoryPK;
 import com.taller2.demo.repositories.LocationRepository;
 import com.taller2.demo.repositories.ProductInventoryRepository;
 import com.taller2.demo.services.interfaces.ProductInventoryService;
@@ -37,15 +38,13 @@ public class ProductInventoryServiceImp implements ProductInventoryService {
 
 	@Transactional
 	@Override
-	public Productinventory editProductInventory(Productinventory proInventory, Integer id) {
+	public Productinventory editProductInventory(Productinventory proInventory, ProductinventoryPK id) {
 		Optional<Productinventory> op = proinRepository.findById(id);
 		Productinventory opLoc = op.get();
 		if (proInventory == null)
-			throw new NullPointerException();
+			throw new NullPointerException("No Object");
 		if (proInventory.getLocation() == null) 
-			throw new NullPointerException();
-		if (lr.existsById(proInventory.getLocation().getLocationid()))
-			throw new NullPointerException();
+			throw new NullPointerException("Location Null");
 		if (proInventory.getQuantity() == null)
 			throw new IllegalArgumentException("Quantity Null");
 		if (proInventory.getQuantity() < 0)

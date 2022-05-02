@@ -27,17 +27,17 @@ import com.taller2.demo.services.ProductServiceImp;
 
 @Controller
 public class InventoryController {
-	
+
 	@Autowired
 	private ProductInventoryRepository productInventoryRepository;
 	@Autowired
 	private ProductInventoryServiceImp productInventoryServiceImp;
-	
+
 	@Autowired
 	private LocationRepository locationRepository;
 	@Autowired
 	private LocationServiceImp locationServiceImp;
-	
+
 	@Autowired
 	private ProductRepository productRepository;
 	@Autowired
@@ -45,10 +45,10 @@ public class InventoryController {
 
 	@GetMapping("/inventoryproduct/")
 	public String products(Model model) {
-		model.addAttribute("productsinventory", productInventoryRepository.findAll());		
+		model.addAttribute("productsinventory", productInventoryRepository.findAll());
 		return "/inventoryproduct/index";
 	}
-	
+
 	@GetMapping("/inventoryproduct/add/")
 	public String addInventoryScreen(Model model) {
 		model.addAttribute("productinventorypk", new ProductinventoryPK());
@@ -57,9 +57,10 @@ public class InventoryController {
 		model.addAttribute("locations", locationRepository.findAll());
 		return "/inventoryproduct/add";
 	}
-	
+
 	@PostMapping("inventoryproduct/add/")
-	public String addInventory(@Valid @ModelAttribute ProductinventoryPK pk, BindingResult bindingResult, Model model, @RequestParam(value = "action", required = true) String action, Integer quantity) {
+	public String addInventory(@Valid @ModelAttribute ProductinventoryPK pk, BindingResult bindingResult, Model model,
+			@RequestParam(value = "action", required = true) String action, Integer quantity) {
 		String ret = "redirect:/inventoryproduct/";
 
 		if (!action.equals("Cancel")) {
@@ -68,6 +69,7 @@ public class InventoryController {
 				productinventory.setQuantity(quantity);
 				productinventory.setId(pk);
 				productinventory.setLocation(locationRepository.findById(pk.getLocationid()).get());
+				productinventory.setProduct(productRepository.findById(pk.getProductid()).get());
 				productInventoryServiceImp.saveProductInventory(productinventory);
 			} else {
 				ret = "/inventoryproduct/add";
@@ -75,12 +77,41 @@ public class InventoryController {
 		}
 		return ret;
 	}
-	
-	@GetMapping("/inventoryproduct/edit/{idp}{idl}")
-	public String editInventory(@Valid @ModelAttribute Productinventory productInventory, BindingResult bindingresult, @PathVariable("idp") Integer idp , @PathVariable("idl") Integer idl, Model model, @RequestParam(value = "action", required = true) String action) {
-		return "";
+
+	@GetMapping("/inventoryproduct/edit/{idp}_{idl}")
+	public String editInventoryScreen(@Valid @ModelAttribute Productinventory productInventory,
+			BindingResult bindingresult, @PathVariable("idp") Integer idp, @PathVariable("idl") Integer idl,
+			Model model) {
+		ProductinventoryPK pk = new ProductinventoryPK();
+
+		pk.setProductid(idp);
+		pk.setLocationid(idl);
+
+		Productinventory pInventory = productInventoryRepository.findById(pk).get();
+
+		model.addAttribute("inventoryproduct", pInventory);
+		return "/inventoryproduct/edit";
 	}
-	
-	
-	
+
+	@PostMapping("/inventoryproduct/edit/{idp}_{idl}")
+	public String editInventory(Model model, @PathVariable("idp") Integer idp,
+			@PathVariable("idl") Integer idl, @RequestParam(value = "action", required = true) String action,
+			Integer quantity) {
+		String dir = "redirect:/inventoryproduct/";
+
+		if (!action.equals("Cancel")) {
+			ProductinventoryPK pk = new ProductinventoryPK();
+
+			pk.setProductid(idp);
+			pk.setLocationid(idl);
+
+			Productinventory pInventory = productInventoryRepository.findById(pk).get();
+
+			pInventory.setQuantity(quantity);
+
+			productInventoryServiceImp.editProductInventory(pInventory, pk);
+		}
+		return dir;
+	}
+
 }
