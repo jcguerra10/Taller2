@@ -15,6 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
+import org.springframework.lang.NonNull;
 
 /**
  * The persistent class for the product database table.
@@ -47,10 +52,12 @@ public class Product implements Serializable {
 
 	private Timestamp modifieddate;
 
+	@Size(min=1, message = "necesita ser mas de 1 caracter")
 	private String name;
 
 	private String productline;
 
+	@Min(value = 0,  message = "Tienes que ser Mayor que 0")
 	private String productnumber;
 
 	private Integer reorderpoint;
@@ -59,16 +66,25 @@ public class Product implements Serializable {
 
 	private Integer safetystocklevel;
 
+	@NonNull
 	private Timestamp sellenddate;
 
+	@NonNull
 	private Timestamp sellstartdate;
 
+	@Positive
 	private BigDecimal size;
 
+	@NonNull()
+	@Positive
+	@Min(value = 0)
 	private BigDecimal standardcost;
 
 	private String style;
-
+	
+	@NonNull()
+	@Positive
+	@Min(value = 0, message = "Tienes que ser Mayor que 1")
 	private BigDecimal weight;
 
 	// bi-directional many-to-one association to Billofmaterial
@@ -87,6 +103,7 @@ public class Product implements Serializable {
 	// bi-directional many-to-one association to Productsubcategory
 	@ManyToOne
 	@JoinColumn(name = "productsubcategoryid")
+	@NonNull
 	private Productsubcategory productsubcategory;
 
 	// bi-directional many-to-one association to Unitmeasure

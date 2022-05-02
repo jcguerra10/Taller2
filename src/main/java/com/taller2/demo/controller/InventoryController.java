@@ -106,7 +106,7 @@ public class InventoryController {
 			pk.setLocationid(idl);
 
 			Productinventory pInventory = productInventoryRepository.findById(pk).get();
-
+			
 			pInventory.setQuantity(quantity);
 
 			productInventoryServiceImp.editProductInventory(pInventory, pk);

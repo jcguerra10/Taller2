@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Size;
 
 /**
  * The persistent class for the location database table.
@@ -33,6 +34,7 @@ public class Location implements Serializable {
 
 	private Timestamp modifieddate;
 
+	@Size(min = 1, message = "Al menos tiene que tener 1 caracter")
 	private String name;
 
 	// bi-directional many-to-one association to Productinventory

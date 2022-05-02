@@ -9,6 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+
+import org.springframework.lang.NonNull;
 
 /**
  * The persistent class for the productcosthistory database table.
@@ -22,10 +27,15 @@ public class Productcosthistory implements Serializable {
 	@EmbeddedId
 	private ProductcosthistoryPK id;
 
+	@NonNull
+	@PastOrPresent
 	private Timestamp enddate;
 
 	private Timestamp modifieddate;
 
+	@NonNull()
+	@Positive
+	@Min(value = 0)
 	private BigDecimal standardcost;
 
 	// bi-directional many-to-one association to Product

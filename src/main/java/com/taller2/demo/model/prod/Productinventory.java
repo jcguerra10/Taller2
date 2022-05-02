@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * The persistent class for the productinventory database table.
@@ -25,6 +27,8 @@ public class Productinventory implements Serializable {
 
 	private Timestamp modifieddate;
 
+	@NotNull
+	@Size(min=0)
 	private Integer quantity;
 
 	private Integer rowguid;

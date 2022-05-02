@@ -59,7 +59,8 @@ public class HistoricCostController {
 		String ret = "redirect:/historiccosts/";
 
 		if (!action.equals("Cancel")) {
-			if (!bindingResult.hasErrors()) {
+			if (!bindingResult.hasErrors() && startdatelb.length() != 0 && enddatelb.length() != 0) {
+				
 				Timestamp startDate = Convert(startdatelb);
 				Timestamp endDate = Convert(enddatelb);
 
@@ -71,6 +72,8 @@ public class HistoricCostController {
 				productcosthistoryServiceImp.saveProductcosthistory(productcosthistory);
 			} else {
 				ret = "/historiccosts/add";
+				model.addAttribute(new Productcosthistory());
+				model.addAttribute("products", productRepository.findAll());
 			}
 		}
 		return ret;
@@ -79,7 +82,7 @@ public class HistoricCostController {
 	private Timestamp Convert(String date) {
 		String res = "";
 		String[] splt = null;
-
+		
 		if (!date.isEmpty() || !date.isBlank()) {
 			splt = date.split("T");
 

@@ -55,5 +55,25 @@ public class ProductInventoryServiceImp implements ProductInventoryService {
 		opLoc.setQuantity(proInventory.getQuantity());
 		return proinRepository.save(opLoc);
 	}
+	
+	@Transactional
+	@Override
+	public Productinventory editProductInventory(Productinventory proInventory, Integer id) {
+		Optional<Productinventory> op = proinRepository.findById(id);
+		Productinventory opLoc = op.get();
+		if (proInventory == null)
+			throw new NullPointerException("No Object");
+		if (proInventory.getLocation() == null) 
+			throw new NullPointerException("Location Null");
+		if (proInventory.getQuantity() == null)
+			throw new IllegalArgumentException("Quantity Null");
+		if (proInventory.getQuantity() < 0)
+			throw new IllegalArgumentException("Quantity is not Greater than 0");
+		opLoc.setId(proInventory.getId());
+		opLoc.setProduct(proInventory.getProduct());
+		opLoc.setLocation(proInventory.getLocation());
+		opLoc.setQuantity(proInventory.getQuantity());
+		return proinRepository.save(opLoc);
+	}
 
 }
