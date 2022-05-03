@@ -5,9 +5,14 @@ import java.sql.Timestamp;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,15 +25,17 @@ import javax.validation.constraints.Size;
 public class Productinventory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private ProductinventoryPK id;
+	@Id
+	@SequenceGenerator(name = "PRODUCTINVENTORY_PRODUCTINVENTORYID_GENERATOR", allocationSize = 1, sequenceName = "PRODUCTINVENTORY_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCTINVENTORY_PRODUCTINVENTORYID_GENERATOR")
+	private Integer id;
 
 	private Integer bin;
 
 	private Timestamp modifieddate;
 
 	@NotNull
-	@Size(min=0)
+	@Min(value = 0)
 	private Integer quantity;
 
 	private Integer rowguid;
@@ -37,12 +44,10 @@ public class Productinventory implements Serializable {
 
 	// bi-directional many-to-one association to Location
 	@ManyToOne
-	@JoinColumn(name = "locationid", insertable = false, updatable = false)
 	private Location location;
 
 	// bi-directional many-to-one association to Product
 	@ManyToOne
-	@JoinColumn(name = "productid", insertable = false, updatable = false)
 	private Product product;
 
 	public Productinventory() {
@@ -52,7 +57,7 @@ public class Productinventory implements Serializable {
 		return this.bin;
 	}
 
-	public ProductinventoryPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
@@ -84,7 +89,7 @@ public class Productinventory implements Serializable {
 		this.bin = bin;
 	}
 
-	public void setId(ProductinventoryPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -2,7 +2,7 @@ package com.taller2.demo;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +13,6 @@ import com.taller2.demo.model.prod.Location;
 import com.taller2.demo.model.prod.Product;
 import com.taller2.demo.model.prod.Productcategory;
 import com.taller2.demo.model.prod.Productcosthistory;
-import com.taller2.demo.model.prod.ProductcosthistoryPK;
 import com.taller2.demo.model.prod.Productsubcategory;
 import com.taller2.demo.model.prod.UserApp;
 import com.taller2.demo.model.prod.UserType;
@@ -65,8 +64,8 @@ public class Taller2Application {
 		Product p = new Product();
 		p.setName("iphone");
 		p.setProductnumber("21");
-		p.setSellstartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
-		p.setSellenddate(Timestamp.valueOf("2022-03-12 10:31:04"));
+		p.setSellstartdate(LocalDate.of(2022, 3, 14));
+		p.setSellenddate(LocalDate.of(2022, 3, 15));
 		p.setProductsubcategory(pSubCategory);
 		p.setSize(BigDecimal.valueOf(12));
 		p.setWeight(BigDecimal.valueOf(12));
@@ -88,13 +87,10 @@ public class Taller2Application {
 		ProductcosthistoryRepository pchr = s.getBean(ProductcosthistoryRepository.class);
 		
 		Productcosthistory pch = new Productcosthistory();
-		ProductcosthistoryPK pchPK = new ProductcosthistoryPK();
 		
-		pchPK.setProductid(p.getProductid());
-		pchPK.setStartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
-		pch.setId(pchPK);
 		pch.setProduct(p);
-		pch.setEnddate(Timestamp.valueOf("2022-03-12 10:31:04"));
+		pch.setStartdate(LocalDate.of(2022, 4, 13));
+		pch.setEnddate(LocalDate.of(2022, 4, 14));
 		pch.setStandardcost(BigDecimal.valueOf(12));
 		
 		pchr.save(pch);

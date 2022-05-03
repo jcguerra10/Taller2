@@ -40,14 +40,14 @@
 								<span class="text-danger"></span>
 							</div>
 							<div class="form-group">
-								<label>Start Date</label> <input class="form-control" type="datetime-local"
-									placeholder="sellstartdate" id="startdate" name="startdate"/> <span
+								<label>Start Date</label> <input class="form-control" type="date"
+									placeholder="sellstartdate" th:field="*{sellstartdate}"/> <span
 									th:if="${#fields.hasErrors('sellstartdate')}" th:errors="*{sellstartdate}"
 									class="text-danger"></span>
 							</div>							
 							<div class="form-group">
-								<label>End Date</label> <input class="form-control" type="datetime-local"
-									placeholder="sellenddate" id="enddate" name="enddate"/> <span
+								<label>End Date</label> <input class="form-control" type="date"
+									placeholder="sellenddate" th:field="*{sellenddate}"/> <span
 									th:if="${#fields.hasErrors('sellenddate')}" th:errors="*{sellenddate}"
 									class="text-danger"></span>
 							</div>

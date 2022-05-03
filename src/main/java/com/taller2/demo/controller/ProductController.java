@@ -66,11 +66,6 @@ public class ProductController {
 
 		if (!action.equals("Cancel")) {
 			if (!bindingResult.hasErrors()) {
-				Timestamp startDate = Convert(startdate);
-				Timestamp endDate = Convert(enddate);
-
-				product.setSellstartdate(startDate);
-				product.setSellenddate(endDate);
 
 				productServiceImp.saveProduct(product);
 
@@ -139,11 +134,7 @@ public class ProductController {
 
 		if (!action.equals("Cancel")) {
 			if (!bindingResult.hasErrors()) {
-				Timestamp startDate = Convert(startdate);
-				Timestamp endDate = Convert(enddate);
 
-				product.setSellstartdate(startDate);
-				product.setSellenddate(endDate);
 				productServiceImp.editProduct(product, id);
 				model.addAttribute("products", productRepository.findAll());
 			} else {

@@ -46,12 +46,18 @@ public class InventoryController {
 	@GetMapping("/inventoryproduct/")
 	public String products(Model model) {
 		model.addAttribute("productsinventory", productInventoryRepository.findAll());
+		
+		
+		
+		productInventoryRepository.findAll().forEach(pi ->
+		
+		System.out.println("---" +pi.getLocation() == null)
+				);
 		return "/inventoryproduct/index";
 	}
 
 	@GetMapping("/inventoryproduct/add/")
 	public String addInventoryScreen(Model model) {
-		model.addAttribute("productinventorypk", new ProductinventoryPK());
 		model.addAttribute("productinventory", new Productinventory());
 		model.addAttribute("products", productRepository.findAll());
 		model.addAttribute("locations", locationRepository.findAll());
@@ -59,57 +65,44 @@ public class InventoryController {
 	}
 
 	@PostMapping("inventoryproduct/add/")
-	public String addInventory(@Valid @ModelAttribute ProductinventoryPK pk, BindingResult bindingResult, Model model,
-			@RequestParam(value = "action", required = true) String action, Integer quantity) {
+	public String addInventory(@Valid @ModelAttribute Productinventory productInventory, BindingResult bindingResult,
+			Model model, @RequestParam(value = "action", required = true) String action, Integer quantity) {
 		String ret = "redirect:/inventoryproduct/";
-
+		
 		if (!action.equals("Cancel")) {
 			if (!bindingResult.hasErrors()) {
-				Productinventory productinventory = new Productinventory();
-				productinventory.setQuantity(quantity);
-				productinventory.setId(pk);
-				productinventory.setLocation(locationRepository.findById(pk.getLocationid()).get());
-				productinventory.setProduct(productRepository.findById(pk.getProductid()).get());
-				productInventoryServiceImp.saveProductInventory(productinventory);
+				System.out.println(productInventory.getProduct().getName());
+				productInventoryServiceImp.saveProductInventory(productInventory);
 			} else {
-				ret = "/inventoryproduct/add";
+				ret = "/inventoryproduct/add";				
 			}
 		}
 		return ret;
 	}
 
-	@GetMapping("/inventoryproduct/edit/{idp}_{idl}")
+	@GetMapping("/inventoryproduct/edit/{id}")
 	public String editInventoryScreen(@Valid @ModelAttribute Productinventory productInventory,
-			BindingResult bindingresult, @PathVariable("idp") Integer idp, @PathVariable("idl") Integer idl,
-			Model model) {
-		ProductinventoryPK pk = new ProductinventoryPK();
+			BindingResult bindingresult, @PathVariable("id") Integer id, Model model) {
 
-		pk.setProductid(idp);
-		pk.setLocationid(idl);
-
-		Productinventory pInventory = productInventoryRepository.findById(pk).get();
+		Productinventory pInventory = productInventoryRepository.findById(id).get();
 
 		model.addAttribute("inventoryproduct", pInventory);
+		model.addAttribute("products", productRepository.findAll());
+		model.addAttribute("locations", locationRepository.findAll());
 		return "/inventoryproduct/edit";
 	}
 
-	@PostMapping("/inventoryproduct/edit/{idp}_{idl}")
-	public String editInventory(Model model, @PathVariable("idp") Integer idp,
-			@PathVariable("idl") Integer idl, @RequestParam(value = "action", required = true) String action,
-			Integer quantity) {
+	@PostMapping("/inventoryproduct/edit/{id}")
+	public String editInventory(@Valid @ModelAttribute Productinventory productInventory, BindingResult bindingResult,
+			Model model, @PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action) {
 		String dir = "redirect:/inventoryproduct/";
 
 		if (!action.equals("Cancel")) {
-			ProductinventoryPK pk = new ProductinventoryPK();
-
-			pk.setProductid(idp);
-			pk.setLocationid(idl);
-
-			Productinventory pInventory = productInventoryRepository.findById(pk).get();
-			
-			pInventory.setQuantity(quantity);
-
-			productInventoryServiceImp.editProductInventory(pInventory, pk);
+			if (!bindingResult.hasErrors()) {
+				productInventoryServiceImp.editProductInventory(productInventory, id);
+			} else {
+				dir = "/inventoryproduct/add";
+			}
 		}
 		return dir;
 	}

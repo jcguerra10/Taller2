@@ -22,21 +22,37 @@
 				<div>
 					<h2 class="my-5">Edit Product Historic Costs</h2>
 					<form action="#"
-						th:action="@{/historiccosts/edit/}+${productcosthistory.id}"
+						th:action="@{/historiccosts/edit/}+${productcosthistory.id}" th:object="${productcosthistory}"
 						method="post">
 						<div>
+							<div class="form-group">
+								<label>Product</label> <select class="form-control"
+									th:field="*{product}">
+									<option th:each="p : ${products}" th:value="${p.productid}"
+										th:text="${#strings.capitalize(p.name)}"></option>
+								</select> <span th:if="${#fields.hasErrors('product')}"
+									th:errors="*{product}" class="text-danger"></span>
+							</div>
+
+							<div class="form-group">
+								<label>Start Date</label> <input class="form-control" type="date"
+									placeholder="startdate" th:field="*{startdate}"/> <span
+									th:if="${#fields.hasErrors('startdate')}" th:errors="*{startdate}"
+									class="text-danger"></span>
+							</div>
 
 							<div class="form-group">
 								<label>End Date</label> <input class="form-control"
-									type="datetime-local" placeholder="enddate" id="enddatelb"
-									name="enddatelb" /> 
+									type="date" placeholder="enddate" th:field="*{enddate}"/> <span
+									th:if="${#fields.hasErrors('enddate')}" th:errors="*{enddate}"
+									class="text-danger"></span>
 							</div>
 
 							<div class="form-group">
 								<label>Standard Cost</label> <input class="form-control"
-									type="number" placeholder="0,0" id="standardcost"
-									name="standardcost"
-									min="0" />
+									type="number" placeholder="0,0" th:field="*{standardcost}"
+									min="0" /> <span th:if="${#fields.hasErrors('standardcost')}"
+									th:errors="*{standardcost}" class="text-danger"></span>
 							</div>
 
 						</div>

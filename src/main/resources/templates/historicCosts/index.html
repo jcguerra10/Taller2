@@ -26,13 +26,15 @@
 							<tr>
 								<th>PK</th>
 								<th>End Date</th>
+								<th>Start Date</th>
 								<th>Standard Cost</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="hc : ${historiccosts}">
-								<td th:text="${hc.id.productid}">
+								<td th:text="${hc.id}">
 								<td th:text="${hc.enddate}" />
+								<td th:text="${hc.startdate}" />
 								<td th:text="${hc.standardcost}" />
 								<!--Buttons-->
 								<td><a

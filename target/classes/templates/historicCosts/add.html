@@ -34,17 +34,15 @@
 							</div>
 
 							<div class="form-group">
-								<label>Start Date</label> <input class="form-control"
-									type="datetime-local" placeholder="startdate" id="startdatelb"
-									name="startdatelb" min=1/> <span
-									th:if="${#fields.hasErrors('enddate')}" th:errors="*{enddate}"
+								<label>Start Date</label> <input class="form-control" type="date"
+									placeholder="startdate" th:field="*{startdate}"/> <span
+									th:if="${#fields.hasErrors('startdate')}" th:errors="*{startdate}"
 									class="text-danger"></span>
 							</div>
 
 							<div class="form-group">
 								<label>End Date</label> <input class="form-control"
-									type="datetime-local" placeholder="enddate" id="enddatelb"
-									name="enddatelb" min=1/> <span
+									type="date" placeholder="enddate" th:field="*{enddate}" min=1/> <span
 									th:if="${#fields.hasErrors('enddate')}" th:errors="*{enddate}"
 									class="text-danger"></span>
 							</div>

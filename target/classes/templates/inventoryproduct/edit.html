@@ -22,14 +22,27 @@
 				<div>
 					<h2 class="my-5">Edit Product Inventory</h2>
 					<form action="#"
-						th:action="@{/inventoryproduct/edit/{idp}_{idl}(idp=${inventoryproduct.product.productid},idl=${inventoryproduct.location.locationid})}"
-						method="post">
+						th:action="@{/inventoryproduct/edit/{id}(id=${inventoryproduct.id})}"
+						th:object="${inventoryproduct}" method="post">
 						<div>
+							<div class="form-group">
+								<label>Product</label> <select class="form-control"
+									th:field="*{product}">
+									<option th:each="p : ${products}" th:value="${p.productid}"
+										th:text="${#strings.capitalize(p.name)}"></option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Location</label> <select class="form-control"
+									th:field="*{location}">
+									<option th:each="p : ${locations}" th:value="${p.locationid}"
+										th:text="${#strings.capitalize(p.name)}"></option>
+								</select>
+							</div>
 							<div>
 								<div class="form-group">
 									<label>Quantity</label> <input class="form-control"
-										type="number" placeholder="Quantity" id="quantity"
-									name="quantity" />
+										type="number" placeholder="Quantity" th:field="*{quantity}"/>
 								</div>
 							</div>
 						</div>

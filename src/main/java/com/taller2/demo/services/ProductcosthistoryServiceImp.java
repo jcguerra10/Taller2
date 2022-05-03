@@ -1,6 +1,7 @@
 package com.taller2.demo.services;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService {
 			throw new IllegalArgumentException("Product Not Exist");
 		if (pch.getEnddate() == null)
 			throw new IllegalArgumentException("EndDate Null");
-		if (pch.getEnddate().compareTo(new Timestamp(System.currentTimeMillis())) > 0)
+		if (pch.getEnddate().isAfter(LocalDate.now()))
 			throw new IllegalArgumentException("End Date Greater Than Actual");
 		if (pch.getStandardcost() == null)
 			throw new IllegalArgumentException("Standar Cost Null");
@@ -40,8 +41,8 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService {
 
 	@Transactional
 	@Override
-	public Productcosthistory editProductcosthistory(Productcosthistory pch, ProductcosthistoryPK productcosthistoryPK) {
-		Optional<Productcosthistory> op = pchRepository.findById(productcosthistoryPK);
+	public Productcosthistory editProductcosthistory(Productcosthistory pch, Integer id) {
+		Optional<Productcosthistory> op = pchRepository.findById(id);
 		Productcosthistory oppch = op.get();
 		if (pch == null) 
 			throw new NullPointerException();
@@ -49,7 +50,7 @@ public class ProductcosthistoryServiceImp implements ProductcosthistoryService {
 			throw new IllegalArgumentException("Product Not Exist");
 		if (pch.getEnddate() == null)
 			throw new IllegalArgumentException("EndDate Null");
-		if (pch.getEnddate().compareTo(new Timestamp(System.currentTimeMillis())) > 0)
+		if (pch.getEnddate().isAfter(LocalDate.now()))
 			throw new IllegalArgumentException("End Date Greater Than Actual");
 		if (pch.getStandardcost() == null)
 			throw new IllegalArgumentException("Standar Cost Null");

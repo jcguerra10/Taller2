@@ -3,16 +3,20 @@ package com.taller2.demo.model.prod;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 
 /**
@@ -24,17 +28,22 @@ import org.springframework.lang.NonNull;
 public class Productcosthistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private ProductcosthistoryPK id;
+	@Id
+	@SequenceGenerator(name = "PRODUCTCOSTHISTORY_PRODUCTCOSTHISTORYID_GENERATOR", allocationSize = 1, sequenceName = "PRODUCTCOSTHISTORY_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCTCOSTHISTORY_PRODUCTCOSTHISTORYID_GENERATOR")
+	private Integer id;
 
 	@NonNull
-	@PastOrPresent
-	private Timestamp enddate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate startdate;
+	
+	@NonNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate enddate;
 
 	private Timestamp modifieddate;
 
 	@NonNull()
-	@Positive
 	@Min(value = 0)
 	private BigDecimal standardcost;
 
@@ -46,11 +55,11 @@ public class Productcosthistory implements Serializable {
 	public Productcosthistory() {
 	}
 
-	public Timestamp getEnddate() {
+	public LocalDate getEnddate() {
 		return this.enddate;
 	}
 
-	public ProductcosthistoryPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
@@ -66,11 +75,19 @@ public class Productcosthistory implements Serializable {
 		return this.standardcost;
 	}
 
-	public void setEnddate(Timestamp enddate) {
+	public void setEnddate(LocalDate enddate) {
 		this.enddate = enddate;
 	}
+	
+	public LocalDate getStartdate() {
+		return startdate;
+	}
 
-	public void setId(ProductcosthistoryPK id) {
+	public void setStartdate(LocalDate startdate) {
+		this.startdate = startdate;
+	}
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

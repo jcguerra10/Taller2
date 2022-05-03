@@ -53,24 +53,18 @@ public class HistoricCostController {
 
 	@PostMapping("/historiccosts/add/")
 	public String productAdd(@Valid @ModelAttribute Productcosthistory productcosthistory, BindingResult bindingResult,
-			Model model, @RequestParam(value = "action", required = true) String action, String startdatelb,
-			String enddatelb) {
+			Model model, @RequestParam(value = "action", required = true) String action) {
 
 		String ret = "redirect:/historiccosts/";
 
 		if (!action.equals("Cancel")) {
-			if (!bindingResult.hasErrors() && startdatelb.length() != 0 && enddatelb.length() != 0) {
-				
-				Timestamp startDate = Convert(startdatelb);
-				Timestamp endDate = Convert(enddatelb);
-
-				productcosthistory.setEnddate(endDate);
-				ProductcosthistoryPK pk = new ProductcosthistoryPK();
-				pk.setProductid(productcosthistory.getProduct().getProductid());
-				pk.setStartdate(startDate);
-				productcosthistory.setId(pk);
+			if (!bindingResult.hasErrors()) {
 				productcosthistoryServiceImp.saveProductcosthistory(productcosthistory);
 			} else {
+				bindingResult.getAllErrors().forEach(t ->
+				System.out.println(t)
+				);
+				
 				ret = "/historiccosts/add";
 				model.addAttribute(new Productcosthistory());
 				model.addAttribute("products", productRepository.findAll());
@@ -96,52 +90,26 @@ public class HistoricCostController {
 	// ----------------- EDIT -----------------
 
 	@GetMapping("/historiccosts/edit/{id}")
-	public String editHistoriccostScreen(@PathVariable("id") String id, Model model) {
-		String[] spl = id.split("_");
-
-		ProductcosthistoryPK pk = new ProductcosthistoryPK();
-
-		pk.setProductid(Integer.parseInt(spl[0]));
-		pk.setStartdate(Timestamp.valueOf(spl[1]));
-
-		Optional<Productcosthistory> find = productcosthistoryRepository.findById(pk);
+	public String editHistoriccostScreen(@PathVariable("id") Integer id, Model model) {
+		
+		Optional<Productcosthistory> find = productcosthistoryRepository.findById(id);
 		if (find.isEmpty())
 			throw new IllegalArgumentException("Invalid Id:" + id);
-		model.addAttribute("pk", pk);
 		model.addAttribute("productcosthistory", find.get());
 		model.addAttribute("products", productRepository.findAll());
 		return "/historiccosts/edit";
 	}
 
 	@PostMapping("/historiccosts/edit/{id}")
-	public String editHistoriccosts(Model model, @PathVariable("id") String id,
+	public String editHistoriccosts(@Valid @ModelAttribute Productcosthistory productcosthistory, BindingResult bindingResult,Model model, @PathVariable("id") Integer id,
 			@RequestParam(value = "action", required = true) String action, String enddatelb, String standardcost) {
 
-		Productcosthistory productcosthistoric = new Productcosthistory();
-		
-		String[] spl = id.split("_");
-		ProductcosthistoryPK pk = new ProductcosthistoryPK();
-
-		System.out.println(spl[0]);
-
-		pk.setProductid(Integer.parseInt(spl[0]));
-		pk.setStartdate(Timestamp.valueOf(spl[1]));
-
-		productcosthistoric.setId(pk);
-		
 
 		String dir = "redirect:/historiccosts/";
 
 		if (!action.equals("Cancel")) {
-			Timestamp endDate = Convert(enddatelb);
-
-			Product p = productRepository.findById(Integer.parseInt(spl[0])).get();
-			productcosthistoric.setEnddate(endDate);
-			productcosthistoric.setStandardcost(BigDecimal.valueOf(Double.parseDouble(standardcost)));
-			productcosthistoric.setProduct(p);
-
-			productcosthistoryServiceImp.editProductcosthistory(productcosthistoric, pk);
-			model.addAttribute("historiccosts", productRepository.findAll());
+			
+			productcosthistoryServiceImp.editProductcosthistory(productcosthistory, id);
 		}
 		return dir;
 	}

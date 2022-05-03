@@ -2,7 +2,9 @@ package com.taller2.demo.model.prod;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -19,6 +21,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 
 /**
@@ -67,10 +70,12 @@ public class Product implements Serializable {
 	private Integer safetystocklevel;
 
 	@NonNull
-	private Timestamp sellenddate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate sellenddate;
 
 	@NonNull
-	private Timestamp sellstartdate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate sellstartdate;
 
 	@Positive
 	private BigDecimal size;
@@ -321,11 +326,11 @@ public class Product implements Serializable {
 		return this.safetystocklevel;
 	}
 
-	public Timestamp getSellenddate() {
+	public LocalDate getSellenddate() {
 		return this.sellenddate;
 	}
 
-	public Timestamp getSellstartdate() {
+	public LocalDate getSellstartdate() {
 		return this.sellstartdate;
 	}
 
@@ -531,11 +536,11 @@ public class Product implements Serializable {
 		this.safetystocklevel = safetystocklevel;
 	}
 
-	public void setSellenddate(Timestamp sellenddate) {
+	public void setSellenddate(LocalDate sellenddate) {
 		this.sellenddate = sellenddate;
 	}
 
-	public void setSellstartdate(Timestamp sellstartdate) {
+	public void setSellstartdate(LocalDate sellstartdate) {
 		this.sellstartdate = sellstartdate;
 	}
 

@@ -7,6 +7,6 @@ import com.taller2.demo.model.prod.Productcosthistory;
 import com.taller2.demo.model.prod.ProductcosthistoryPK;
 
 @Repository
-public interface ProductcosthistoryRepository extends CrudRepository<Productcosthistory, ProductcosthistoryPK> {
+public interface ProductcosthistoryRepository extends CrudRepository<Productcosthistory, Integer> {
 
 }
