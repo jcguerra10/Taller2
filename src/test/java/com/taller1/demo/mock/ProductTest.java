@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -52,8 +53,8 @@ class ProductTest {
 		product0 = new Product();
 		product0.setProductsubcategory(pSubCategory);
 		product0.setProductnumber("1");
-		product0.setSellstartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
-		product0.setSellenddate(Timestamp.valueOf("2022-03-13 10:30:04")); //
+		product0.setSellstartdate(LocalDate.of(2022, 3, 15));
+		product0.setSellenddate(LocalDate.of(2022, 3, 16)); //
 		product0.setWeight(BigDecimal.valueOf(12));
 		product0.setSize(BigDecimal.valueOf(2));
 	}
@@ -68,8 +69,8 @@ class ProductTest {
 		product2 = new Product();
 		product2.setProductsubcategory(pSubCategory);
 		product2.setProductnumber("1");
-		product2.setSellstartdate(Timestamp.valueOf("2022-03-15 10:30:04"));
-		product2.setSellenddate(Timestamp.valueOf("2022-03-13 10:30:04")); //
+		product2.setSellstartdate(LocalDate.of(2022, 3, 14));
+		product2.setSellenddate(LocalDate.of(2022, 3, 12)); //
 		product2.setWeight(BigDecimal.valueOf(-1));
 		product2.setSize(BigDecimal.valueOf(-1));
 	}
@@ -94,8 +95,8 @@ class ProductTest {
 		product1 = new Product();
 		product1.setProductsubcategory(pSubCategory);
 		product1.setProductnumber("1");
-		product1.setSellstartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
-		product1.setSellenddate(Timestamp.valueOf("2022-03-13 10:30:04")); //
+		product1.setSellstartdate(LocalDate.of(2022, 3, 14));
+		product1.setSellenddate(LocalDate.of(2022, 3, 15)); //
 		product1.setWeight(BigDecimal.valueOf(12));
 		product1.setSize(BigDecimal.valueOf(1));
 	}
@@ -112,8 +113,8 @@ class ProductTest {
 		product3 = new Product();
 		product3.setProductsubcategory(pSubCategory);
 		product3.setProductnumber("1");
-		product3.setSellstartdate(Timestamp.valueOf("2022-03-14 10:30:04"));
-		product3.setSellenddate(Timestamp.valueOf("2022-03-13 10:30:04")); //
+		product3.setSellstartdate(LocalDate.of(2022, 3, 14));
+		product3.setSellenddate(LocalDate.of(2022, 3, 12)); //
 		product3.setWeight(BigDecimal.valueOf(-1));
 		product3.setSize(BigDecimal.valueOf(-1));
 	}
@@ -147,7 +148,7 @@ class ProductTest {
 			ps.saveProduct(product2);
 		});
 		
-		product2.setSellstartdate(Timestamp.valueOf("2022-03-11 10:30:04"));
+		product2.setSellstartdate(LocalDate.of(2022, 3, 18));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			ps.saveProduct(product2);
@@ -188,13 +189,13 @@ class ProductTest {
 			ps.saveProduct(product4);
 		});
 		
-		product4.setSellstartdate(Timestamp.valueOf("2022-03-11 10:30:04"));
+		product4.setSellstartdate(LocalDate.of(2022, 3, 14));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			ps.saveProduct(product4);
 		});
 		
-		product4.setSellenddate(Timestamp.valueOf("2022-03-12 10:30:04"));
+		product4.setSellenddate(LocalDate.of(2022, 3, 18));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			ps.saveProduct(product4);
@@ -240,13 +241,13 @@ class ProductTest {
 			ps.editProduct(product3, 1);
 		});
 		
-		product3.setSellstartdate(Timestamp.valueOf("2022-03-11 10:30:04"));
+		product3.setSellstartdate(LocalDate.of(2022, 3, 14));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			ps.editProduct(product3, 1);
 		});
 		
-		product3.setSellenddate(Timestamp.valueOf("2022-03-12 10:30:04"));
+		product3.setSellenddate(LocalDate.of(2022, 3, 15));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			ps.editProduct(product3, 1);
@@ -290,13 +291,13 @@ class ProductTest {
 			ps.editProduct(product4, 1);
 		});
 		
-		product4.setSellstartdate(Timestamp.valueOf("2022-03-11 10:30:04"));
+		product4.setSellstartdate(LocalDate.of(2022, 3, 14));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			ps.editProduct(product4, 1);
 		});
 		
-		product4.setSellenddate(Timestamp.valueOf("2022-03-12 10:30:04"));
+		product4.setSellenddate(LocalDate.of(2022, 3, 15));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			ps.editProduct(product4, 1);

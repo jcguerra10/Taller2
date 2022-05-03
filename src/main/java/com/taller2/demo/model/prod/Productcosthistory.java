@@ -41,7 +41,7 @@ public class Productcosthistory implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate enddate;
 
-	private Timestamp modifieddate;
+	private LocalDate modifieddate;
 
 	@NonNull()
 	@Min(value = 0)
@@ -63,7 +63,7 @@ public class Productcosthistory implements Serializable {
 		return this.id;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -91,7 +91,7 @@ public class Productcosthistory implements Serializable {
 		this.id = id;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 

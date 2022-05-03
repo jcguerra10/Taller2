@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -85,8 +86,8 @@ class ProductcosthistoryTest {
 		pscService.saveProductsubcategory(pSubCategory);
 		
 		proc.setProductnumber("1");
-		proc.setSellstartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
-		proc.setSellenddate(Timestamp.valueOf("2022-03-13 10:30:04")); //
+		proc.setSellstartdate(LocalDate.of(2022, 3, 14));
+		proc.setSellenddate(LocalDate.of(2022, 3, 15)); //
 		proc.setWeight(BigDecimal.valueOf(12));
 		proc.setSize(BigDecimal.valueOf(2));
 		
@@ -95,16 +96,12 @@ class ProductcosthistoryTest {
 	
 
 	@BeforeEach
-	void setUp2() {
-		pch0 = new Productcosthistory();
-		ProductcosthistoryPK pk = new ProductcosthistoryPK();
-		pk.setProductid(1);
-		pk.setStartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
-		pch0.setId(pk);
+	void setUp2() {		
+		pch0.setId(1);
 		pch0.setProduct(proc);
-		pch0.setEnddate(Timestamp.valueOf("2022-03-10 10:05:23"));
-		pch0.setStandardcost(BigDecimal.valueOf(25000));
-		pch0.setModifieddate(Timestamp.valueOf("2022-03-20 10:05:23"));
+		pch0.setStartdate(LocalDate.of(2022, 3, 14));
+		pch0.setEnddate(LocalDate.of(2022, 3, 15));
+		pch0.setStandardcost(BigDecimal.valueOf(25000));		
 	}
 
 	@BeforeEach
@@ -112,10 +109,10 @@ class ProductcosthistoryTest {
 		pch2 = new Productcosthistory();
 		ProductcosthistoryPK pk = new ProductcosthistoryPK();
 		pk.setProductid(1);
-		pk.setStartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
-		pch2.setId(pk);
+		pch2.setStartdate(LocalDate.of(2022, 3, 14));
+		pch2.setId(1);
 		pch2.setProduct(procRepository.findById(1).get());
-		pch2.setEnddate(Timestamp.valueOf("2024-03-10 10:05:23"));
+		pch2.setEnddate(LocalDate.of(2022, 3, 15));
 		pch2.setStandardcost(BigDecimal.valueOf(-2));
 	}
 	
@@ -129,24 +126,22 @@ class ProductcosthistoryTest {
 		pch0op = Optional.of(pch0);
 		
 		pch1 = new Productcosthistory();
-		ProductcosthistoryPK pk = new ProductcosthistoryPK();
-		pk.setProductid(1);
-		pk.setStartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
-		pch1.setId(pk);
+
+		pch1.setStartdate(LocalDate.of(2022, 3, 14));
+		pch1.setId(1);
 		pch1.setProduct(procRepository.findById(1).get());
-		pch1.setEnddate(Timestamp.valueOf("2022-03-10 12:12:23"));
+		pch1.setEnddate(LocalDate.of(2022, 3, 15));
 		pch1.setStandardcost(BigDecimal.valueOf(23500));
 	}
 	
 	@BeforeEach
 	void setUp6() {
 		pch3 = new Productcosthistory();
-		ProductcosthistoryPK pk = new ProductcosthistoryPK();
-		pk.setProductid(1);
-		pk.setStartdate(Timestamp.valueOf("2022-03-12 10:30:04"));
-		pch3.setId(pk);
+
+		pch3.setStartdate(LocalDate.of(2022, 3, 14));
+		pch3.setId(1);
 		pch3.setProduct(procRepository.findById(1).get());
-		pch3.setEnddate(Timestamp.valueOf("2024-03-10 10:05:23"));
+		pch3.setEnddate(LocalDate.of(2022, 3, 15));
 		pch3.setStandardcost(BigDecimal.valueOf(-2));
 	}
 
@@ -162,7 +157,7 @@ class ProductcosthistoryTest {
 		Productcosthistory test = pchService.saveProductcosthistory(pch0);
 		
 		assertNotNull(test.getProduct());
-		assertTrue(test.getEnddate().compareTo(new Timestamp(System.currentTimeMillis())) < 0);
+		assertTrue(test.getEnddate().isAfter(LocalDate.now()));
 		assertTrue(test.getStandardcost().doubleValue() >= 0);
 	}
 	
@@ -175,7 +170,7 @@ class ProductcosthistoryTest {
 			pchService.saveProductcosthistory(pch2);
 		});
 		
-		pch2.setEnddate(Timestamp.valueOf("2022-03-10 10:05:23"));
+		pch2.setEnddate(LocalDate.of(2022, 3, 18));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			pchService.saveProductcosthistory(pch2);
@@ -198,7 +193,7 @@ class ProductcosthistoryTest {
 			pchService.saveProductcosthistory(pch2);
 		});
 		
-		pch2.setEnddate(Timestamp.valueOf("2022-03-10 10:05:23"));
+		pch2.setEnddate(LocalDate.of(2022, 3, 18));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			pchService.saveProductcosthistory(pch2);
@@ -229,7 +224,7 @@ class ProductcosthistoryTest {
 			pchService.editProductcosthistory(pch3, pch0.getId());
 		});
 		
-		pch3.setEnddate(Timestamp.valueOf("2022-03-10 10:05:23"));
+		pch3.setEnddate(LocalDate.of(2022, 3, 18));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			pchService.editProductcosthistory(pch3, pch0.getId());
@@ -254,7 +249,7 @@ class ProductcosthistoryTest {
 			pchService.editProductcosthistory(pch4, pch0.getId());
 		});
 		
-		pch4.setEnddate(Timestamp.valueOf("2022-03-10 10:05:23"));
+		pch4.setEnddate(LocalDate.of(2022, 3, 18));
 		
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			pchService.editProductcosthistory(pch4, pch0.getId());
