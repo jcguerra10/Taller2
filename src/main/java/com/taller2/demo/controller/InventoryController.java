@@ -58,7 +58,7 @@ public class InventoryController {
 
 	@GetMapping("/inventoryproduct/add/")
 	public String addInventoryScreen(Model model) {
-		model.addAttribute("productinventory", new Productinventory());
+		model.addAttribute("inventoryproduct", new Productinventory());
 		model.addAttribute("products", productRepository.findAll());
 		model.addAttribute("locations", locationRepository.findAll());
 		return "/inventoryproduct/add";

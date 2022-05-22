@@ -123,6 +123,7 @@ public class ProductController {
 		if (find.isEmpty())
 			throw new IllegalArgumentException("Invalid Id:" + id);
 		model.addAttribute("product", find.get());
+		model.addAttribute("subcategories", productsubcategoryRepository.findAll());
 		return "/products/edit";
 	}
 

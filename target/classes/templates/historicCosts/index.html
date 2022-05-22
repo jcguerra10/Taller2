@@ -28,6 +28,7 @@
 								<th>End Date</th>
 								<th>Start Date</th>
 								<th>Standard Cost</th>
+								<th>Product</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -36,6 +37,10 @@
 								<td th:text="${hc.enddate}" />
 								<td th:text="${hc.startdate}" />
 								<td th:text="${hc.standardcost}" />
+								<td><a
+										th:href="@{/products/}"
+										class="btn" th:text="${hc.product.name}">
+								</a></td>
 								<!--Buttons-->
 								<td><a
 									th:href="@{/historiccosts/edit/{id}(id=${hc.id})}"
